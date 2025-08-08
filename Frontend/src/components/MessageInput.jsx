@@ -54,7 +54,7 @@ const MessageInput = () => {
             <img
               src={imagePreview}
               alt="Preview"
-              className="w-20 h-20 object-cover rounded-lg border border-pink-500"
+              className="w-10 h-10 object-cover rounded-lg border-pink-500"
             />
             <button
               onClick={removeImage}
@@ -69,7 +69,7 @@ const MessageInput = () => {
 
       <form
         onSubmit={handleSendMessage}
-        className="flex items-center gap-3 bg-pink-500 px-4 py-3 rounded-xl shadow-md"
+        className="flex items-center gap-3 bg-pink-500 px-4 py-3 rounded-xl shadow-xl"
       >
         <input
           type="text"

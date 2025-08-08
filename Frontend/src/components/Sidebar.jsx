@@ -4,8 +4,6 @@ import { useAuthStore } from "../store/useAuthStore";
 import SidebarSkeleton from "./skeletons/SidebarSkeleton";
 import { Users, Plus, X, Trash2 } from "lucide-react";
 import toast from "react-hot-toast";
-import AddContactForm from "../components/AddContactForm";
-
 
 const Sidebar = () => {
   const {
@@ -61,20 +59,22 @@ const Sidebar = () => {
   return (
     <>
       <aside className="h-full w-20 lg:w-72 border-r border-pink-200 bg-white flex flex-col">
-        <div className="border-b border-pink-200 w-full p-5 bg-pink-100">
-          <div className="flex items-center justify-between text-pink-600">
+        {/* Header */}
+        <div className="border-b border-pink-200 w-full p-5 bg-pink-500">
+          <div className="flex items-center justify-between text-white">
             <div className="flex items-center gap-2">
               <Users className="size-6" />
               <span className="font-semibold hidden lg:block">Contacts</span>
             </div>
             <button
               onClick={() => setShowAddContact(true)}
-              className="hidden lg:flex items-center gap-1 text-sm text-pink-600 hover:text-pink-800"
+              className="hidden lg:flex items-center gap-1 text-sm text-white hover:text-pink-800 transition"
             >
               <Plus size={18} /> <span>Add</span>
             </button>
           </div>
 
+          {/* Online toggle */}
           <div className="mt-3 hidden lg:flex items-center gap-2">
             <label className="cursor-pointer flex items-center gap-2">
               <input
@@ -83,46 +83,63 @@ const Sidebar = () => {
                 onChange={(e) => setShowOnlineOnly(e.target.checked)}
                 className="checkbox checkbox-sm border-pink-300 checked:bg-pink-500"
               />
-              <span className="text-sm text-pink-700">Show online only</span>
+              <span className="text-sm text-white">Show online only</span>
             </label>
-            <span className="text-xs text-pink-500">({onlineUsers.length - 1} online)</span>
+            <span className="text-xs text-white">
+              ({onlineUsers.length - 1} online)
+            </span>
           </div>
         </div>
 
-        <div className="overflow-y-auto w-full py-3">
+        {/* Contact list */}
+        <div className="overflow-y-auto w-full py-3 space-y-2">
           {filteredUsers.map((user) => (
             <div
               key={user._id}
-              className={`w-full p-3 flex items-center gap-3 transition-all duration-150 rounded-md justify-between ${
+              className={`w-full p-3 flex items-center gap-3 rounded-md justify-between transition-all duration-200 ${
                 selectedUser?._id === user._id
                   ? "bg-pink-100 ring-1 ring-pink-400"
                   : "hover:bg-pink-50"
               }`}
             >
+              {/* Clickable User */}
               <button
                 onClick={() => setSelectedUser(user)}
-                className="flex items-center gap-3 w-full"
+                className="flex items-center gap-3 w-full text-left"
               >
                 <div className="relative">
-                  <img
-                    src={user.profilePic || "/avatar.png"}
-                    alt={user.name}
-                    className="size-12 object-cover rounded-full border-2 border-pink-300"
-                  />
+                  {user.profilePic ? (
+                    <img
+                      src={user.profilePic}
+                      alt={user.fullName}
+                      className="w-12 h-12 rounded-full border-2 border-pink-300 object-cover object-center shadow-sm hover:scale-105 transition-transform duration-200"
+                      onError={(e) => {
+                        e.target.style.display = "none";
+                      }}
+                    />
+                  ) : (
+                    <div className="w-12 h-12 flex items-center justify-center rounded-full border-2 border-pink-300 bg-pink-200 text-pink-700 font-bold text-lg shadow-sm">
+                      {user.fullName?.charAt(0).toUpperCase()}
+                    </div>
+                  )}
                   {onlineUsers.includes(user._id) && (
-                    <span className="absolute bottom-0 right-0 size-3 bg-green-500 rounded-full ring-2 ring-white" />
+                    <span className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full ring-2 ring-white"></span>
                   )}
                 </div>
                 <div className="hidden lg:block text-left min-w-0">
-                  <div className="font-medium text-pink-700 truncate">{user.fullName}</div>
+                  <div className="font-medium text-pink-700 truncate">
+                    {user.fullName}
+                  </div>
                   <div className="text-sm text-pink-400">
                     {onlineUsers.includes(user._id) ? "Online" : "Offline"}
                   </div>
                 </div>
               </button>
+
+              {/* Delete Button */}
               <button
                 onClick={() => handleDeleteContact(user._id)}
-                className="text-pink-400 hover:text-red-500"
+                className="text-pink-400 hover:text-red-500 transition"
               >
                 <Trash2 size={18} />
               </button>
@@ -130,7 +147,9 @@ const Sidebar = () => {
           ))}
 
           {filteredUsers.length === 0 && (
-            <div className="text-center text-pink-400 py-4">No contacts found</div>
+            <div className="text-center text-pink-400 py-4">
+              No contacts found
+            </div>
           )}
         </div>
       </aside>
@@ -145,7 +164,9 @@ const Sidebar = () => {
             >
               <X size={20} />
             </button>
-            <h3 className="text-lg font-semibold text-pink-600 mb-4">Add New Contact</h3>
+            <h3 className="text-lg font-semibold text-pink-600 mb-4">
+              Add New Contact
+            </h3>
             <form onSubmit={handleAddContact} className="space-y-4">
               <div>
                 <label className="text-sm text-pink-600">Full Name</label>

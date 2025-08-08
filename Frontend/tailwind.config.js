@@ -4,7 +4,13 @@ import daisyui from "daisyui";
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+            colors: {
+        babypink: "#F8C8DC",   // Soft pastel pink
+        lavender: "#E6E6FA",  // Light lavender purple
+      },
+
+    },
   },
   plugins: [daisyui],
   daisyui: {
