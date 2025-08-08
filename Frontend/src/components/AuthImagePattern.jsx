@@ -1,17 +1,12 @@
 const AuthImagePattern = ({ title, subtitle }) => {
   return (
-    <div className="hidden lg:flex items-center justify-center bg-base-200 p-12">
-      <div className="max-w-md text-center">
-        <div className="grid grid-cols-3 gap-3 mb-8">
-          {[...Array(9)].map((_, i) => (
-            <div
-              key={i}
-              className={`aspect-square rounded-2xl bg-primary/10 ${
-                i % 2 === 0 ? "animate-pulse" : ""
-              }`}
-            />
-          ))}
-        </div>
+    <div
+      className="flex items-center justify-center bg-cover bg-center p-12"
+      style={{
+        backgroundImage: `url('/background.jpg')`, // 👈 change to your image path
+      }}
+    >
+      <div className="bg-white/80 p-8 rounded-xl text-center max-w-md shadow-lg">
         <h2 className="text-2xl font-bold mb-4">{title}</h2>
         <p className="text-base-content/60">{subtitle}</p>
       </div>
@@ -19,4 +14,4 @@ const AuthImagePattern = ({ title, subtitle }) => {
   );
 };
 
-export default AuthImagePattern
+export default AuthImagePattern;

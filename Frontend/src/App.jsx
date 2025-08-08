@@ -24,6 +24,11 @@ const App = () => {
     checkAuth();
   }, [checkAuth]);
 
+  // Set the HTML tag's data-theme attribute only once
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme || "light");
+  }, [theme]);
+
   console.log({ authUser });
 
   if (isCheckingAuth && !authUser)
@@ -34,7 +39,7 @@ const App = () => {
     );
 
   return (
-    <div data-theme={theme}>
+    <>
       <Navbar />
 
       <Routes>
@@ -46,10 +51,8 @@ const App = () => {
       </Routes>
 
       <Toaster />
-    </div>
+    </>
   );
 };
-
-
 
 export default App;

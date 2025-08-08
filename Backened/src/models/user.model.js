@@ -19,7 +19,10 @@ const userSchema = new mongoose.Schema(
     profilePic: {
       type: String,
       default: "",
-    },
+    },  
+    contacts: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+
+
   },
   { timestamps: true }
 );
